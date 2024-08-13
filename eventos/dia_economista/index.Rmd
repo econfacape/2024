@@ -1,7 +1,7 @@
 ---
 title: "A INCLUSÃO DA IA NAS FERRRAMENTAS DE TRABALHO DO ECONOMISTA"
 author: 'João Ricardo Lima<br><span style = "font-size: 70%;">D.Sc em Economia Aplicada<br>joao.lima@prof.facape.br'
-date: "<span style = 'font-size: 70%;'> 14 de Agosto de 2024.</span>"
+date: "<span style = 'font-size: 70%;'> 13 de Agosto de 2024.</span>"
 encoding: "UTF-8"
 output:
   xaringan::moon_reader:
