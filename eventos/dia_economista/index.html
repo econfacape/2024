@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>A INCLUSÃO DA IA NAS FERRRAMENTAS DE TRABALHO DO ECONOMISTA</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="João Ricardo Lima D.Sc em Economia Aplicada joao.lima@prof.facape.br" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/xaringanExtra-progressBar/progress-bar.js"></script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# A INCLUSÃO DA IA NAS FERRRAMENTAS DE TRABALHO DO ECONOMISTA
+]
+.author[
+### João Ricardo Lima<br><span style = "font-size: 70%;">D.Sc em Economia Aplicada<br><a href="mailto:joao.lima@prof.facape.br" class="email">joao.lima@prof.facape.br</a>
+]
+.date[
+### <span style="font-size: 70%;"> 14 de Agosto de 2024.</span>
+]
+
+---
+
+class: center
+
+
+
+<style>.xe__progress-bar__container {
+  bottom:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #282f6b;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
+
+&lt;style type="text/css"&gt;
+pre {
+  white-space: pre-wrap;
+  overflow-y: scroll !important;
+  max-height: 45vh !important;
+  overflow-x: auto;
+  max-width: 100%;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+## YAHOO E OS PRIMÓRDIOS DAS NUVENS
+
+&lt;img src="imgs/yahoo.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center
+## MÍDIAS QUE FICARAM OBSOLETAS
+
+&lt;img src="imgs/disquete.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center
+## FERRAMENTAS QUE FICARÃO OBSOLETAS EM BREVE
+
+&lt;img src="imgs/google.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center
+## PARTE DOS QUE PODEM FICAR OBSOLETOS...😜
+
+&lt;img src="imgs/estudantes.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center
+## O MERCADO DE TRABALHO E A IA
+
+.pull-left[
+
+&lt;img src="imgs/desemprego.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+- "O mercado está cada vez mais demandante. 
+
+Não vamos nem falar em AI [Inteligência Artificial]. 
+
+A AI pode ser complementar ou substituta. 
+
+Se você tiver uma mão de obra bem qualificada, ela é complementar. 
+
+Se você tiver uma mão de obra fraca, ela é substituta." (BARBOSA FILHO, F. DE H. - Pesquisador do Ibre/FGV)
+
+]
+
+---
+class: center
+## AS PRINCIPAIS FERRAMENTAS DO ECONOMISTA
+
+.pull-left[
+
+- Modelos de Equilíbrio Geral Computável 
+
+&lt;img src="imgs/gem_gtap.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+- No Brasil, a USP com o prof. Eduardo Haddad, ESALQ-USP com o prof. Joaquim Bento e a FGV/UFV com o prof. Angelo Gurgel são os maiores expoentes.
+]
+
+.pull-right[
+
+- Modelos de Regressão
+
+- Regressão Linear com dados de seção cruzada;
+
+- Séries Temporais para previsão 
+
+- Séries Temporais com dados de Alta frequência ou series temporais irregulares
+
+- Dados em Painel
+
+- Modelos de Inferência Causal e contrafactuais: DID, PSM, IV. 
+
+- No Brasil, estes modelos estão bem disseminados. 
+
+]
+
+---
+class: center
+
+### AS PRINCIPAIS FERRAMENTAS DO ECONOMISTA
+
+.pull-left[
+
+- Os Programas de Computador 
+
+&lt;img src="imgs/r_python.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+- No momento, R ou Python passa a ser a dúvida de qual programa deve ser utilizado. Stata, SAS, SPSS, Eviews perdem espaço rápidamente dentre os economistas. 
+
+]
+
+.pull-right[
+
+- Além do programa R ou Python, ainda é preciso agora escolher uma IDE (Integrated Development Environment) para se trabalhar. 
+
+&lt;img src="imgs/ide.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- Para a IBM (2024), "IA é uma tecnologia que permite que computadores e máquinas simulem a capacidade de resolução de problemas e a inteligência humana. Por si só ou combinada com outras tecnologias (como sensores, geolocalização e robótica) a IA pode realizar tarefas que, de outro modo, exigiriam a inteligência ou intervenção humana".   
+
+- IA é um conceito mais amplo, para qualquer técnica que permita às máquinas imitar ou replicar a inteligência humana. 
+
+- Se subdivide em diversas abordagens: a) Symbolic AI; b) Expert Systems (anos 70 e 80 do século XX); c) Evolutionary Algorithms (anos 90); d) Machine (anos 2000) e Deep Learning (anos 2010); e) IA Generativa (presente momento).
+
+]
+
+.pull-right[
+
+- A IA passa a ser relevantes para os economistas a medida que:
+
+a) Melhora a nossa condição de analisar grandes conjuntos de dados, tomar decisões e fazer previsões;
+
+b) Automatiza muitas tarefas;
+
+c) Realiza análise de perfil de consumidor personalizada;
+
+d) Faz pesquisas, cria cenários e conteúdos. 
+
+Leitura recomendada:
+
+Agrawal, A., Gans, J., &amp; Goldfarb, A. (Eds.). (2019). The Economics of Artificial Intelligence: An Agenda. University of Chicago Press.
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- Em relação aos modelos de ML (Machine Learning) e DL (deep learning) são considerados um subconjunto da IA dado que permimtem que o sistema aprenda com os dados, identifique padrões e tome decisões com o mínimo de intervenção humana. 
+
+- Os modelos aprendem com os dados e melhoram o seu desempenho a medida que recebem novos dados. 
+
+- A automatização das tarefas permite que decisões sejam tomadas com maior rapidez e precisão na comparação com os humanos. 
+
+- Resolvem problemas mais complexos.
+
+]
+
+.pull-right[
+
+- Entre os modelos de ML e DL mais usados atualmente, tem-se a divisão entre os modelos de aprendizagem supervisionada e não supervisionada. 
+
+- No caso dos modelos de aprendizagem supervisionada, tem-se:
+
+a) Modelo Logit para classificar indivíduos;
+
+b) Árvores de decisão e Random Forests;
+
+c) Support Vector Machine
+
+d) KNN (K vizinhos mais próximos)
+
+e) Gradient Boosting Machines (GBM)
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- No caso dos Modelos Não Supervisionados, tem-se:
+
+a) Cluster pelo método das K-médias
+
+b) Cluster Hierárquico
+
+c) Análise de componentes principais
+
+d) Redes Neurais
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/ml_scheme.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- Contudo, no período mais recente, é IA generativa que tem mais chamado atenção de todos. 
+
+&lt;img src="imgs/chat_gemini.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+- IA generativa é fascinante por ser capaz de criar algo novo e inesperado. É baseada em algoritmos de Machine Learning que são treinados usando enormes conjuntos de dados. Por exemplo, um algoritmo de Machine Learning pode ser treinado usando milhões de imagens de paisagens, o que permite que ele crie suas próprias imagens de paisagens.
+
+
+]
+
+.pull-right[
+
+- Os tipos mais conhecidos de IA generativa são baseados em grandes modelos de linguagem (LLMs), onde analisam, parafraseiam, editam, traduzem e geram texto, imagens e outros tipos de conteúdo. 
+
+- LLMs são algoritmos estatísticos treinados em enormes conjuntos de dados de linguagem natural, como textos da Internet, livros, artigos de periódicos e revistas. Ao processar esses dados, os LLMs podem aprender a estimar probabilidades associadas a possíveis respostas ao texto e podem classificar as respostas de acordo com a probabilidade de serem julgadas corretas pelos seres humanos. 
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- Existe um conjunto de questões éticas relacionadas com a IA. Assim, sugestões de leitura são: 
+
+Resnik, D.B., Hosseini, M. The ethics of using artificial intelligence in scientific research: new guidance needed for a new tool. AI Ethics (2024). https://doi.org/10.1007/s43681-024-00493-8
+
+Chetwynd E. Ethical Use of Artificial Intelligence for Scientific Writing: Current Trends. J Hum Lact. 2024 May;40(2):211-215. doi: 10.1177/08903344241235160. 
+
+O que é a ética na IA? (https://www.ibm.com/br-pt/topics/ai-ethics)
+
+
+]
+
+.pull-right[
+
+- Contudo, o objetivo aqui é mostrar como a IA pode ajudar a aumentar a nossa produtividade, como pode acelerar a nossa curva de aprendizagem, como ela pode nos ajudar a poupar tempo com tarefas necessárias, mas que não são as mais importantes para o trabalho do economista. 
+
+- Importante, antes de tudo, falar sobre o que se denomina de **engenharia de prompt**, ou seja, como vamos perguntar para a IA? Assim, é preciso aprender a se comunicar com as IA generativas. Se fizer perguntas de forma incorreta, as respostas serão sem sentido ou generalistas demais.  
+
+]
+
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- O prompt é o input que vamos oferecer para a IA generativa com o objetivo de receber um output. 
+
+&lt;img src="imgs/chat1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+- Acima se tem prompts bastante diretos, usados para obter respostas específicas.
+
+]
+
+.pull-right[
+
+- Contudo, não se trata apenas de fazer a pergunta certa. O processo de construir prompts de maneira efetiva para gerar resultados melhores envolve etapas: 
+
+a) Definir o objetivo
+
+b) Criar rascunho inicial de prompt
+
+c) Testar o prompt
+
+d) Analisar a resposta
+
+e) Refinar o prompt
+
+f) Iterar até alcançar o resultado desejado
+
+]
+
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+- A IA também vai aprendendo através da interação. 
+
+&lt;img src="imgs/chat2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/chat3.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="imgs/chat4.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/chat5.png" width="92%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="imgs/chat6.png" width="92%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/chat7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/chat8.png" width="120%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/chat9.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/chat10.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/chat11.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/chat12.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/chat13.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/chat14.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/chat15.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+&lt;img src="imgs/chat16.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast6.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast8.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast9.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast10.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast11.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast12.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast13.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast14.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast15.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast16.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast17.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast18.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast19.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast20.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast21.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast23.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast22.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast24.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast25.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast26.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast27.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast28.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center
+
+### INTELIGÊNCIA ARTIFICAL (IA) COMO UMA FERRAMENTA
+
+.pull-left[
+
+&lt;img src="imgs/forecast29.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/forecast30.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: center, middle
+
+# OBRIGADO!
+
+
+# FELIZ DIA DO ECONOMISTA!
+
+
+João Ricardo F. de Lima &lt;br&gt;
+Email: joao.lima@prof.facape.br
+IG: jotaerre.econ
+
+
+Telefones:&lt;br&gt;
+87-99961-5799 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

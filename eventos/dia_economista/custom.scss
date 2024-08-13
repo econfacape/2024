@@ -1,0 +1,53 @@
+/*-- scss:defaults --*/
+// importing fonts
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:400,400i,700,700i&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:600,600i&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:400,700&display=swap');
+
+// fonts
+$font-family-sans-serif: 'Noto Sans', -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial !default;
+
+// headings
+$presentation-heading-font: 'Cabin', Georgia, serif !default;
+$presentation-heading-color: #282f6b !default;
+$h1-font-size: 2.75rem !default;
+$h2-font-size: 2.25rem !default;
+$h3-font-size: 1.75rem !default;
+
+// code
+$code-color: #282f6b !default;
+$font-family-monospace: 'Source Code Pro', Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace !default;
+
+// general  
+$body-bg: #E9EAF0 !default;
+$body-color: #1C204A !default;
+$link-color: #282f6b !default;
+$presentation-font-size-root: 26px !default;
+
+/*-- scss:rules --*/
+.reveal pre code {
+  background-color: #f8f8f8;
+  font-size: 0.9rem;
+  padding: 0.5em;
+  line-height: 1.5em;
+}
+
+.subtitle, .author {
+  color: $presentation-heading-color;
+  font-size: $h2-font-size;
+}
+
+.date {
+  font-size: 1em;
+}
+
+.reveal .panel-tabset [role=tab] {
+  font-size: 1em;
+}
+
+.reveal .slides img[src="logofacape.png"] {
+  max-width: 200px;  // Adjust this value to change the logo size
+  max-height: 200px; // Adjust this value to change the logo size
+  width: auto;
+  height: auto;
+}
