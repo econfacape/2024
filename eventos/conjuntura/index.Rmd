@@ -1,0 +1,1439 @@
+---
+title: "ANÁLISE DA CONJUNTURA ECONÔMICA DO BRASIL"
+author: 'João Ricardo Lima<br><span style = "font-size: 70%;">D.Sc em Economia Aplicada<br>joao.lima@prof.facape.br'
+date: "<span style = 'font-size: 70%;'> 24 de Setembro de 2024.</span>"
+encoding: "UTF-8"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: TRUE
+      ratio: "16:9"
+      navigation: 
+        scroll: false
+params:
+  references: FALSE # TRUE = mostrar último slide com referências
+  references_path: "https://gist.githubusercontent.com/analisemacro/1521d6cd7d9239cc2343269ca6f99a0a/raw/58d10d00e7a55ef38aac695693cc5513952fbb1a/references.bib" # caminho para arquivo .bib
+  logo_slides: "https://raw.githubusercontent.com/econfacape/2023/main/logofacape.png"
+---
+class: left, top
+
+```{r setup, include=FALSE}
+# Dependências dos slides/aula
+library(knitr)          # CRAN v1.33
+library(rmarkdown)      # CRAN v2.10
+library(xaringan)       # CRAN v0.22
+library(xaringanthemer) # CRAN v0.3.0
+library(xaringanExtra)  # [github::gadenbuie/xaringanExtra] v0.5.5
+library(RefManageR)     # CRAN v1.3.0
+library(ggplot2)        # CRAN v3.3.5
+library(fontawesome)    # [github::rstudio/fontawesome] v0.1.0
+library(pagedown)
+library(kableExtra)
+library(dplyr)
+library(GetBCBData)
+library(lubridate)
+library(RcppRoll)
+library(scales)
+library(zoo)
+
+# Opções de chunks
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  echo       = FALSE,
+  warning    = FALSE,
+  message    = FALSE,
+  fig.retina = 3,
+  fig.width  = 11,
+  fig.asp    = 0.618,
+  out.width  = "100%",
+  fig.align  = "center",
+  comment    = "#"
+  )
+
+# Cores para gráficos
+colors <- c(
+  blue       = "#282f6b",
+  red        = "#b22200",
+  yellow     = "#eace3f",
+  green      = "#224f20",
+  purple     = "#5f487c",
+  orange     = "#b35c1e",
+  turquoise  = "#419391",
+  green_two  = "#839c56",
+  light_blue = "#3b89bc",
+  gray       = "#666666"
+  )
+```
+
+```{r xaringan, echo=FALSE}
+# Tema da apresentação
+xaringanthemer::style_mono_light(
+  base_color                      = unname(colors["blue"]),
+  title_slide_background_image    = params$logo_slides, 
+  title_slide_background_size     = 12,
+  title_slide_background_position = "bottom 10px right 20px",
+  title_slide_background_color    = "white",
+  title_slide_text_color          = unname(colors["blue"]),
+  footnote_position_bottom        = "15px"
+  )
+
+# Opções extras do tema
+xaringanExtra::use_progress_bar(
+  color    = colors["blue"], 
+  location = "bottom"
+  )
+xaringanExtra::use_extra_styles(
+  hover_code_line         = TRUE,
+  mute_unhighlighted_code = FALSE
+  )
+xaringanExtra::use_panelset()
+```
+
+```{css, echo=FALSE}
+pre {
+  white-space: pre-wrap;
+  overflow-y: scroll !important;
+  max-height: 45vh !important;
+  overflow-x: auto;
+  max-width: 100%;
+}
+```
+
+```{r load_refs, echo=FALSE, eval=params$references}
+# Configuração de citações
+RefManageR::BibOptions(
+  check.entries = FALSE,
+  bib.style     = "authoryear",
+  cite.style    = "authoryear",
+  style         = "markdown",
+  hyperlink     = FALSE,
+  dashed        = FALSE
+  )
+if(params$references){
+  temp_refbib <- tempdir()
+  download.file(
+    url      = params$references_path, 
+    destfile = paste0(temp_refbib, "/references.bib"), 
+    mode     = "wb"
+    )
+  myBib <- RefManageR::ReadBib(paste0(temp_refbib, "/references.bib"), check = FALSE)
+  }
+
+# Como citar?
+# RefManageR::TextCite(myBib, "id_da_citacao")
+```
+
+```{r utils, echo=FALSE}
+# Função que pega um arquivo .Rmd, condicionalmente o renderiza, 
+# e embute o conteúdo do mesmo formatado como Markdown puro 
+# no output do documento atual
+print_rmd <- function(file, encoding = "UTF-8", render = TRUE){
+  if(render){rmarkdown::render(input = file, quiet = TRUE)}
+  rmd <- readLines(con = file, encoding = encoding)
+  cat("```md\n")
+  cat(rmd, sep = "\n")
+  cat("```\n")
+}
+```
+
+
+# Modelos macroeconômicos do BCB
+
+O **Banco Central do Brasil (BCB)** desde a implantação do **regime de metas para inflação** implementou modelos macroeconômicos para ajudar na condução da política monetária.
+
+Os principais modelos adotados são: 
+
+a) **Indicadores antecedentes e núcleos de inflação**: útil para análise de conjuntura de curto prazo;
+
+b) **Modelos de Vetores Autorregressivos (VAR)**: útil para prever inflação no curto prazo;
+
+c) **Modelos semiestruturais de pequeno porte**: ferramenta central para a análise das perspectivas para a inflação;
+
+d) **Modelo semiestrutural médio porte**: útil para análises de longo prazo, mas atualmente com importância reduzida;
+
+e) **Modelo estrutural de médio porte**: modelo DSGE (Equilíbrio Geral Dinâmico Estocástico) para a economia brasileira.
+
+---
+class: left, top
+
+# Modelo Semiestrutural de Pequeno Porte
+
+Dentre estes modelos, aqui será tratado o **modelo semiestrutural de pequeno porte**. Os principais pontos desses modelos são:
+
+a) A **inflação** depende da **taxa de juros real**;
+
+b) A **taxa de juros básica nominal** é o **instrumento de política**;
+
+c) Existem **mecanismos de transmissão nas decisões** de política econômica;
+
+d) As expectativas dos agentes podem ser do tipo **backward-looking** ou **forward-looking**;
+
+e) Existem **defasagens no mecanismo de transmissão**.
+
+---
+class: left, top
+
+# Modelo Semiestrutural de Pequeno Porte
+
+O modelo básico do **Banco Central**, que busca captar os mecanismos de transmissão das decisões de política monetária, bem como as defasagens aí envolvidas, pode ser visto em Bogdanski et al. (2000). Ele é composto por:
+
+a) Uma **Curva IS** (Investment-Saving), representando o **lado da demanda**;
+
+b) Uma **Curva de Phillips**, representando o **lado da oferta**;
+
+c) Uma **Condição de Paridade Descoberta da taxa de juros**, representando o contato com o **setor externo**;
+
+d) Uma **Regra de Taylor**, representando as **decisões de política monetária**.
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+#### A Curva IS 
+
+pode ser representada como abaixo:
+
+$$h_t = \beta_0 + \beta_{1} h_{t-1} + \beta_{2j} r_{t} + \beta_{3} \Psi_{t-1} + u_t \tag{1}$$
+onde $h_{t}$ é o hiato do produto, $r_{t}$ é o hiato da taxa de juros real ex ante e $\Psi_{t-1}$ representa as necessidades de financiamento do setor público e $u_t$ são os choques.
+
+#### A Curva de Phillips 
+
+é representada por:
+
+$$\pi_t^{livres} = \beta_{0} + \beta_{1} E_t \pi^{total}_{t+i} + \beta_{2} \pi^{total}_{t-j} + \beta_{3} \pi^{importada}_{t-k} + \beta_{4} h_{t-1} + \beta_{5} \gamma_{t-1} + \varepsilon_t \tag{2}$$
+onde $\pi_t^{livres}$ é a inflação de preços livres, $E_t \pi^{total}_{t+i}$ é a expectativa, $\pi^{total}_{t-j}$ é a inflação com ajuste sazonal, $\pi^{importada}_{t-k}$ é a importada, $h_{t-1}$ é o hiato, $\gamma$ é a taxa de câmbio nominal com uma defasagem e $\varepsilon_{t}$ é um choque de oferta.
+
+---
+class: left, top
+
+# Modelo Semiestrutural de Pequeno Porte
+
+#### A Condição de Paridade Descoberta
+
+é dada por:
+
+$$\gamma_{t} = \phi_{0}  - \phi_{1}(i_{t} - i_{t}^*) + \phi_{2}x_{t} + \varepsilon_{t}^{e}\tag{3}$$ 
+
+onde $\Delta\gamma_{t}$ é a taxa de câmbio, $(i_{t} - i_{t}^*)$ representa o diferencial de juros domésticos e externos, $x_{t}$ é o prêmio de risco medido pelo CDS5Y e $\varepsilon_{t}^{e}$ é um choque externo.
+
+#### A Regra de Taylor 
+
+pode ser definida como:
+
+$$i_t=\theta_1 i_{t-1}+\theta_2 i_{t-2}+\left(1-\theta_1-\theta_2\right) *\left[r_t^{e q}+\pi_t^{\text {meta }}+\theta_3\left(\pi_{t}-\pi_t^{\text {meta }}\right)\right]+ \theta_3 h_{t-1} + \epsilon_t^i \tag{4}$$ 
+
+Onde $i_t$ representa a meta da taxa de juros nominal, $\pi_{t} - \pi_{t}^{M}$ os desvios da inflação em relação a meta, $h_t$ o hiato do produto (diferença entre o produto real e produto potencial), $r_t^{eq}$ representa a taxa de juros real neutra variante no tempo, por fim, temos $\epsilon_t$ representando os choques.
+
+---
+class: center, middle
+
+## O Hiato do Produto 
+
+.left-column[
+
+Representa a diferença entre o Produto Real de uma economia e o seu Produto Potencial. Quando o Produto Real está abaixo do Potencial, há um Hiato do produto Negativo (indicando recursos subutilizados). Quando está acima do Potencial, há um gap positivo (indicando superaquecimento da economia).
+
+]
+
+.right-column[
+
+```{python conjun1, message=FALSE, echo=FALSE}
+import pandas as pd
+from plotnine import *
+from datetime import datetime
+
+# Load dataset
+hiato_bcb_long = (
+    pd.read_csv(filepath_or_buffer="dados/hiato_bcb_long.csv", sep=",", decimal=".")
+    .drop(columns=['Unnamed: 0'])
+)
+
+# Ensure 'date_quarter' is in datetime format
+hiato_bcb_long['date_quarter'] = pd.to_datetime(hiato_bcb_long['date_quarter'], format='%Y-%m-%d')
+
+# Create the plot
+g1 = (
+  ggplot(hiato_bcb_long, aes(x='date_quarter', y='value', color='variable')) +
+  geom_line(size=1.5) +
+  geom_hline(yintercept=0, linetype='dashed', color='black', size=1) +
+  theme_minimal() +
+  scale_color_manual(values='#b22200') +
+  scale_x_date(date_breaks='2 years', date_labels="%Y") +  # Use scale_x_date for date formatting
+  labs(
+    title='Hiato do Produto (BCB)',
+    x='Anos',
+    y='',
+    color="",
+    caption='Fonte: BCB'
+  ) +
+  theme(
+    legend_position='bottom',
+    axis_text_x=element_text(size=12),
+    axis_text_y=element_text(size=12),
+    figure_size=(10, 6)
+  )
+)
+
+print(g1)
+
+  
+```
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+A dummy da crise do Subprime mostra que no período houve contração econômica no Brasil. O mesmo para a dummy do período da pandemia.
+
+No caso do valor positivo para a variável do hiato defasado, o sinal é esperado mostrando que valores passados influenciam o valor atual do hiato, pois os ajustes na economia demandam tempo.
+
+O valor negativo da variável de politica monetária mostra que o aumento das taxas de juros no passado afetam o hiato da produção no presente, ou seja, o produto efetivo se aproxima do potencial, dado que os consumidores gastam menos e os empresários investem menos. 
+
+O impacto da política fiscal sobre o hiato não foi imediato, talvez devem levar mais tempo para afetar, dado não ser estatisticamente significativo. 
+]
+
+.pull-left[
+
+### A estimativa da Curva IS
+
+| Variáveis        | Coefic. | Erro-Pad | Est-T | Prob. |
+|:------------------|:----------:|:------------:|:--------:|:---------:|
+| Intercepto        | 0.1180   | 0.0849     | 1.3897 | 0.1646  |
+| Dummy Subpri       | -1.5329  | 0.1260     | -12.171| 0.0000  |
+| Dummy Covid          | -3.2344  | 0.1780     | -18.175| 0.0000  |
+| Autoreg IS       | 0.9444   | 0.0375     | 25.160 | 0.0000  |
+| Juros Real | -0.0750  | 0.0369     | -2.0329| 0.0421  |
+| NFSP   | -0.0457  | 0.0721     | -0.6339| 0.5262  |
+
+*Instrumentos*: hiato_lag1, juro_real_ex_ante_lag1, neutro_lag2, nfsp_diff_lag1
+]
+
+---
+class: center, middle
+
+## O IPCA Preços Livres 
+
+.left-column[
+
+São todos os preços não administrados. Os preços administrados são, por ex.: Taxa de água e esgoto, gás de botijão, gás encanado, energia elétrica residencial, ônibus urbano, táxi, trem, ônibus intermunicipal, ônibus interestadual, metrô, integração de transporte público, emplacamento e licença, multa, pedágio, gasolina, óleo diesel, entre outros.
+
+]
+
+.right-column[
+
+```{python conjun3, message=FALSE, echo=FALSE}
+
+from plotnine import ggplot, aes, geom_line, theme_minimal, labs, scale_x_datetime, element_text, theme, geom_hline, scale_color_manual
+
+# Load the CSV file generated in R
+dados_ipca_filtered = pd.read_csv("dados/dados_ipca_filtered.csv", sep=",", decimal=".")
+
+# Split the 'date_quarter' column to extract year and quarter
+dados_ipca_filtered['year'] = dados_ipca_filtered['date_quarter'].astype(str).str[:4]
+dados_ipca_filtered['quarter'] = dados_ipca_filtered['date_quarter'].astype(str).str[5:]
+
+# Create a datetime column using the first day of each quarter
+dados_ipca_filtered['date_quarter'] = pd.to_datetime(dados_ipca_filtered['year'] + '-Q' + dados_ipca_filtered['quarter']) + pd.offsets.QuarterBegin(startingMonth=1)
+
+# Create the graph using plotnine (ggplot2 equivalent in Python)
+g1 = (
+    ggplot(dados_ipca_filtered, aes(x='date_quarter', y='ipca_livres')) +
+    geom_line(color='darkblue', size=1.5) +
+    theme_minimal() +
+    scale_x_datetime(date_breaks='2 years', date_labels='%Y') +
+    labs(
+        title='IPCA Preços Livres',
+        x='Anos',
+        y='Variação Trimestral',
+        caption='IBGE/BCB'
+    ) +
+    theme(
+        axis_text_x=element_text(size=12),
+        axis_text_y=element_text(size=12),
+        figure_size=(10, 6)  # Set figure size
+    )
+)
+
+# Print the graph
+print(g1)
+```
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+As Expectativas de Inflação, a Inflação Passada e a Inflação Internacional explicam significativamente o IPCA preços livres.
+
+A Inflação Passada do IPCA preços livres tem um coeficiente negativo, mas não é o esperado.
+
+O Hiato do Produto se comporta de acordo com a teoria, tendo um leve impacto positivo na inflação.
+
+O modelo não captou mudanças significativas na Taxa de Câmbio sobre a Inflação no curto prazo. 
+
+O efeito do período da COVID é significativo, como esperado.
+
+]
+
+.pull-right[
+
+### A estimativa da Curva de Phillips
+
+| Variáveis        | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:-----------------|:-----------:|:----------:|:--------:|:---------:|
+| Inércia IPCA Liv | -0.7569     | 0.1230     | -6.1539  | 0.0000 |
+| Expec IPCA     |  0.3050     | 0.0518     |  5.8898  | 0.0000 |
+| Inércia IPCA  |  0.6498     | 0.0531     | 12.2305  | 0.0000|
+| Inércia IC          |  0.0452     | 0.0187     |  2.4173  | 0.0182|
+| Hiato Prod.            |  0.0012     | 0.0006     |  2.0286  | 0.0463|
+| Var. Câmbio      | -0.4036     | 0.4767     | -0.8466  | 0.4000    |
+| Dummy Covid          |  0.7863     | 0.4349     |  1.8079  | 0.0749|
+
+ *Instrumentos*: ipca_exp_12m_lead2 + ipca_total_lag1 + ic_lag1 + cambio_diff + hiato_lag1
+    
+]
+
+---
+class: center, middle
+
+## A Taxa de Câmbio 
+
+.left-column[
+
+A Paridade de Juros Descoberta ajuda a explicar a relação entre as taxas de juros e as taxas de câmbio entre dois países. Se um país tem uma taxa de juro mais elevada do que outro, espera-se que a sua moeda se desvalorize no futuro para compensar os retornos mais elevados da sua taxa de juro.
+
+]
+
+.right-column[
+
+```{python conjun4, message=FALSE, echo=FALSE}
+import pandas as pd # Manipulação de dados
+import numpy as np
+from bcb import sgs
+import pandas_datareader.data as web
+import datetime
+
+# Load the CSV file generated in R
+dados = pd.read_csv("dados/dados_cambio.csv", sep=",", decimal=".")
+dados['Date'] = pd.to_datetime(dados['Date'])
+
+# Set 'Date' as the index
+dados.set_index('Date', inplace=True)
+
+# Display the first few rows of the final DataFrame
+#print(dados.head())
+
+# Create the graph for the 'cambio' column using plotnine
+g1 = (
+    ggplot(dados.reset_index(), aes(x='Date', y='cambio')) +
+    geom_line(color='darkgreen', size=1.5) +
+    theme_minimal() +
+    scale_x_datetime(date_breaks='2 years', date_labels='%Y') +
+    labs(
+        title='Taxa de Câmbio ao Longo do Tempo',
+        x='Anos',
+        y='Reais/Dólar',
+        caption='Fonte: BCB/FED/Investing'
+    ) +
+    theme(
+        axis_text_x=element_text(size=12),
+        axis_text_y=element_text(size=12),
+        figure_size=(10, 6)  # Set figure size
+    )
+)
+
+# Print the graph
+print(g1)
+
+```
+
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+Um aumento no Prêmio de Risco defasado leva a um aumento (depreciação) na taxa de câmbio neste modelo. 
+
+No caso da Taxa de Juros, o diferencial defasado da taxa de juros não tem um impacto claro ou forte na taxa de câmbio neste modelo.
+
+]
+
+.pull-right[
+
+### A Paridade Descoberta Juros
+
+```{python conjunt5, message=FALSE, echo=FALSE, include = FALSE}
+
+import pmdarima as pm
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+# Assuming your dataset is already loaded into 'dados' DataFrame
+
+# Step 1: Calculate the percentage change in exchange rate
+dados['cambio_delta'] = dados['cambio'].pct_change()
+# Step 2: Calculate the interest rate differential
+dados['interest'] = dados['selic'] - dados['fed']
+dados['cambio_diff'] = dados['cambio'].diff()
+dados['interest_lag'] = dados['interest'].shift(1)
+dados['cds5y_lag'] = dados['cds5y'].shift(1)
+
+# Create a trend variable with values from 1 to 177
+dados['trend'] = range(1, 178)
+
+dados = dados.dropna()
+
+# Drop rows with missing values after the percentage change calculation
+#dados_clean = dados.dropna()
+
+# Create a new dataset with only 'delta_cambio' and 'diff_interest'
+#var_exogen = dados_clean[['cds5y', 'diff_interest']]
+
+# Step 1: Define the auto_arima model
+# We set 'delta_cambio' as the dependent variable and 'diff_interest' and 'cds5y' as exogenous variables
+model_auto_arima = pm.auto_arima(dados['cambio'],
+            dados[['trend', 'cds5y_lag', 'interest_lag']],
+            seasonal=True, 
+            stepwise=True, 
+            trace=False)
+
+# Step 2: Fit the model and print the summary
+model_auto_arima.summary()
+```
+
+| Variáveis        | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:-----------------|:-----------:|:----------:|:--------:|:---------:|
+| Intercepto        |  0.1014     | 0.0450     |  2.257   |  0.024    |
+| Tendência            |  0.0227     | 0.0030     |  8.773   |  0.000    |
+| Risco lag        |  0.0015     | 0.0003     |  4.464   |  0.000    |
+| Juros Lag     | -0.0249     | 0.0210     | -1.194   |  0.233    |
+| ar.L1            |  0.9302     | 0.0260     | 35.565   |  0.000    |
+| $\sigma^2$           |  0.0172     | 0.0010     | 12.544   |  0.000    |
+
+]
+
+---
+class: center, middle
+
+## A Taxa de Juros 
+
+.left-column[
+
+Os bancos centrais devem ajustar as Taxas de Juros em resposta às mudanças na inflação e na produção econômica.
+
+Se a inflação real estiver acima da meta, o BC aumenta as taxas de juros para reduzir a pressão inflacionista. 
+
+Se a economia estiver aquecida, as taxas de juros são aumentadas para evitar aumento da inflação.
+
+]
+
+.right-column[
+
+```{python conjun6, message=FALSE, echo=FALSE}
+from plotnine import ggplot, aes, geom_line, scale_x_date, labs, theme, element_text, theme_minimal
+import pandas as pd
+
+dados_juros = (
+    pd.read_csv(filepath_or_buffer="dados/dados_juros.csv", sep=",", decimal=".")
+    )
+    
+# Remove as linhas com valores ausentes
+dados_juros = dados_juros.dropna()
+
+# Create a date range starting from 2014-09-30 to 2024-09-30, with monthly intervals
+date_range = pd.date_range(start='2014-09-30', end='2024-08-31', freq='M')
+
+# Assuming 'dados_juros' is your DataFrame
+dados_juros.index = date_range
+
+# Assign the name 'date' to the index
+dados_juros.index.name = 'date'
+
+# Transforma para long para criar o gráfico    
+dados_juros_long = pd.melt(dados_juros.reset_index(),
+                        id_vars = 'date',
+                        value_vars = ['Juro Real', 'Juro Neutro'],
+                        var_name = 'variable',
+                        value_name = 'values')
+
+# Assuming dados_juros_long is already created
+plot = (
+    ggplot(dados_juros_long, aes(x='date', y='values', color='variable')) +
+    geom_line(aes(linetype='variable'), size=1.5) +
+    scale_x_date(date_breaks='1 year', date_labels='%Y') +
+    labs(title='Juro Real X Juro Neutro', x='Anos', y='% a.a.') +
+    theme_minimal() +
+    theme(
+        axis_text_x=element_text(size=12),
+        axis_text_y=element_text(size=12),
+        legend_title=element_text(size=12),
+        legend_text=element_text(size=12),
+        legend_position='bottom',
+        figure_size=(10, 6))
+        +
+    scale_color_manual(values=['black', 'red'])
+)
+
+# Display the plot
+print(plot)
+```
+
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+### Regra da Taxa de Juros de Taylor
+
+O coeficiente positivo em Selic Lag1 indica que o Banco Central é cauteloso em fazer grandes e abruptas mudanças na taxa de juros.
+
+A resposta do Banco Central aos desvios na inflação é positiva, ou seja o coeficiente mostra que eles ajustam a taxa Selic para cima em resposta à inflação.
+
+O Hiato do Produto não foi significativo, neste modelo. O Banco Central pode não estar usando o produto como um grande impulsionador de decisões políticas.
+]
+
+.pull-right[
+
+#### Modelo Básico
+
+| Variáveis       | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:----------------|:-----------:|:----------:|:--------:|:---------:|
+| Intercepto      |  8.7796     | 0.5300     | 16.568   |  0.000    |
+| Desvio Inflação     |  0.6331     | 0.1720     |  3.688   |  0.001    |
+| Hiato           |  0.4765     | 0.2170     |  2.198   |  0.032    |
+
+#### Modelo Básico BCB
+
+| Variáveis        | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:-----------------|:-----------:|:----------:|:--------:|:---------:|
+| Selic Lag1       |  1.5411     | 0.1210     | 12.755   |  0.000    |
+| Selic Lag2       | -0.5746     | 0.1150     | -4.987   |  0.000    |
+| Desvio Inflação  |  0.1474     | 0.0490     |  3.033   |  0.004    |
+| Inércia Hiato    |  0.0081     | 0.0400     |  0.204   |  0.839    |
+
+]
+
+---
+class: left, top
+
+## Comportamento do PIB Trimestral (IBGE)
+
+```{r conjun7, echo=FALSE, message=FALSE, out.width="80%"}
+library(mFilter)
+
+pib <- ts(read.csv2('dados/arquivo03.csv',
+                       header=T, sep=';', dec=',')[,-c(1,2)],
+             start=c(1996,01), freq=4)
+
+hp <- hpfilter(pib[,2], type='lambda', freq=1600)
+
+range <- range(pib[,2])
+
+plot(pib[,2], type="l", lwd=3, xaxt='n', bty='l', xlab='', 
+     ylab='Número Índice',
+     ylim=c(range[1], range[2]))
+
+polygon(x=c(2020,2020, 2021,2021),
+        y=c(range[1]-10, range[2]+10, rev(range[2]+10), rev(range[1]-10)),
+        density=NA, col="lightgray", border=NA)
+
+polygon(x=c(2014,2014, 2017,2017),
+        y=c(range[1]-10, range[2]+10, rev(range[2]+10), rev(range[1]-10)),
+        density=NA, col="lightgray", border=NA)
+
+polygon(x=c(2008,2008, 2010,2010),
+        y=c(range[1]-10, range[2]+10, rev(range[2]+10), rev(range[1]-10)),
+        density=NA, col="lightgray", border=NA)
+
+
+lines(pib[,2], type="l", lwd=3)
+lines(hp$trend, col='red', lty=2, lwd=2)
+axis(1, at=c(1996:2024))
+grid(, col='grey0')
+
+mtext('Comportamento do PIB trimestral', side=3, line=1, font=2)
+
+legend('topleft', lty=c(1,2), lwd=c(3,2), col=c('black', 'red'),
+       legend=c('PIB IBGE', 'Filtro HP'), bty='n')
+```
+
+---
+class: left, top
+
+## PIB Taxas de Variação
+
+```{python, echo=FALSE, message=FALSE}
+# Cores para gráficos
+colors = {'blue': '#282f6b',
+          'yellow': '#eace3f',
+          'red'   : "#b22200",
+          'green': '#224f20',
+          'purple' : "#5f487c",
+          'gray': '#666666',
+          'orange' : '#b35c1e',
+          'turquoise' : "#419391",
+          'green_two' : "#839c56"
+          }
+```
+
+```{python conjun9, echo=FALSE, message=FALSE, out.width="90%"}
+taxas_pib = (
+    pd.read_csv(filepath_or_buffer="dados/taxas_pib.csv", sep=",", decimal=".")
+    )
+
+# Criando o gráfico
+plot2 = (
+    ggplot(taxas_pib, aes(x='data')) +
+    geom_col(aes(y='value', fill = 'variable')) +
+    labs(x="", y="%") +
+    facet_wrap('~variable', nrow=2, scales = "free_y") +
+    scale_x_date(date_breaks = "12 month", date_labels = "%b/%Y") +
+    scale_colour_manual(values=list(colors.values())) +
+    scale_fill_manual(values=list(colors.values())) +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(hjust = 1, size=12, angle=45),
+        axis_text_y=element_text(size=12)
+    ) +
+    labs(title="",
+         caption = 'Dados: IBGE')
+) 
+
+print(plot2)
+```
+
+---
+class: center, middle
+
+## PIB do lado da Oferta Acumulado 4 Trimestres
+```{python conjun10, echo=FALSE, message=FALSE}
+
+taxas = (
+    pd.read_csv(filepath_or_buffer="dados/taxas.csv", sep=",", decimal=".")
+    )
+
+# Tabela dos componentes do PIB (oferta)
+oferta = ['Serviços', 'Indústria', "Agropecuária"]
+
+taxas_oferta_anual = (
+    taxas
+    .query("rubrica in @oferta")
+    .filter(
+        items = ["rubrica", "data", "Var. % anual"],
+        axis = "columns"
+        )
+    )
+
+# Criando o gráfico
+plot3 = (
+    ggplot(taxas_oferta_anual, aes(x='data')) +
+    geom_col(aes(y='Var. % anual', fill = 'rubrica')) +
+    labs(x="", y="%") +
+    facet_wrap('~rubrica', nrow=1, scales = 'free_y') +
+    scale_x_date(date_breaks = "9 month", date_labels = "%b/%Y") +
+    scale_colour_manual(values=list(colors.values())) +
+    scale_fill_manual(values=list(colors.values())) +
+    theme_minimal() +
+    theme(
+        figure_size=(16, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(hjust = 1, size=12, angle=45),
+        axis_text_y=element_text(size=12)
+    ) +
+    labs(title="",
+         caption = 'Dados: IBGE')
+)
+
+print(plot3)
+```
+
+---
+class: center, middle
+
+### PIB do lado da Demanda Acumulado 4 Trimestres
+
+```{python conjun11, echo=FALSE, message=FALSE, out.width="82%"}
+
+demanda = ['Consumo das Famílias', 'Despesa do Governo', "FBFC", "Exportação", "Importação"]
+
+taxas_demanda_anual = (
+    taxas
+    .query("rubrica in @demanda")
+    .filter(
+        items = ["rubrica", "data", "Var. % anual"],
+        axis = "columns"
+        )
+    )
+
+# Criando o gráfico
+plot4 = (
+    ggplot(taxas_demanda_anual, aes(x='data')) +
+    geom_col(aes(y='Var. % anual', fill = 'rubrica')) +
+    labs(x="", y="%") +
+    facet_wrap('~rubrica', nrow=3, scales = 'free_y') +
+    scale_x_date(date_breaks = "9 month", date_labels = "%b/%Y") +
+    scale_colour_manual(values=list(colors.values())) +
+    scale_fill_manual(values=list(colors.values())) +
+    theme_minimal() +
+    theme(
+        figure_size=(16, 10),
+        legend_position="bottom",
+        axis_text_x=element_text(hjust = 1, size=12, angle=45),
+        axis_text_y=element_text(size=12)
+    ) +
+    labs(title="",
+         caption = 'Dados: IBGE')
+)
+
+print(plot4)
+```
+
+---
+class: left, center
+## PIB Taxas de Variação
+
+.left-column[
+
+Agricultura, em 2024, vem passando por desafios devido as questões climáticas.
+
+O PIB está com crescimento acumulado de 2,39%.
+
+O crescimento é puxado por consumo das famílias e exportações, mas no último trimestre a FBCF teve crescimento importante.
+]
+
+.right-column[
+
+| Rubrica                  | Var. % margem | Var. % interanual | Var. % anual | Var. % acumulada no ano |
+|:-------------------------|:-------------:|:-----------------:|:------------:|:-----------------------:|
+| PIB                      |     1.45      |       3.33        |    2.45      |          2.90           |
+| Agropecuária              |    -2.32      |      -2.86        |    0.01      |         -2.93           |
+| Indústria                 |     1.83      |       3.90        |    2.63      |          3.38           |
+| Serviços                  |     1.01      |       3.53        |    2.55      |          3.28           |
+| Cons. Famílias      |     1.35      |       4.88        |    3.69      |          4.64           |
+| Cons. Governo        |     1.30      |       3.15        |    2.37      |          2.87           |
+| FBCF                      |     2.08      |       5.66        |   -0.91      |          4.18           |
+| Exportação                |     1.37      |       4.51        |    7.03      |          5.44           |
+| Importação                |     7.64      |      14.84        |    4.08      |         12.57           |
+]
+
+
+---
+class: center, top
+
+## Inflação no Mundo
+
+```{r conjun12, echo=FALSE, message=FALSE, out.width="75%"}
+library(BMR)
+
+CPI <- ts(read.csv2('dados/inflacao.csv', header=T,
+                     sep=';')[,-1], start=c(2000))
+
+INF <- (CPI/stats::lag(CPI,-1)-1)*100
+
+colnames(INF) <- c('BRA_INF', 'USA_INF', 'DEU_INF', 'CAN_INF', 'FRA_INF', 'ITA_INF', 'JPN_INF', 'GBR_INF', 'MEX_INF')
+
+inflacao <- ts(INF,start=c(2001))
+
+dates <- seq(as.Date('2001-01-01'),
+             as.Date('2023-01-01'), by='1 year')
+gtsplot(inflacao, dates=dates)
+```
+
+---
+class: center, top
+
+## IPCA Acumulado em 12 Meses
+
+```{python conjun13a, echo=FALSE, message=FALSE, out.width="72%"}
+from plotnine import ggplot, aes, geom_line, labs, theme_minimal, scale_x_datetime, theme, element_text
+
+ipca_12m = (
+    pd.read_csv(filepath_or_buffer="dados/ipca_12m.csv", sep=",", decimal=".")
+    .drop(columns=['Unnamed: 0'])
+    )
+# Ensure 'date' is in datetime format
+ipca_12m['date'] = pd.to_datetime(ipca_12m['date'])
+
+ipca_12m = ipca_12m[ipca_12m['date'] >= '2014-01-01']
+
+# Create a line plot using plotnine
+plot5a = (
+    ggplot(ipca_12m, aes(x='date', y='value')) +
+    geom_line(size=1.5, color='darkblue') +
+    scale_x_datetime(date_breaks="1 year", date_labels="%Y") +
+    labs(title="",
+         x="Anos",
+         y="IPCA Acumulado (%)") +
+    theme_minimal() +
+    theme(
+        axis_text_x=element_text(size=14),  # X-axis text size
+        axis_text_y=element_text(size=14),  # Y-axis text size
+        axis_title_x=element_text(size=14),  # X-axis title size
+        axis_title_y=element_text(size=14),
+        figure_size=(12, 8) # Y-axis title size
+    ) +
+    labs(title="",
+         caption = 'Dados: IBGE')
+)
+
+print(plot5a)
+```
+
+
+---
+class: left, center
+
+## O IPCA contribuição por grupo
+
+| Groups                      | Março 2024 | Abril 2024 | Maio 2024 | Junho 2024 | Julho 2024 | Agosto 2024 |
+|:----------------------------|:----------:|:----------:|:---------:|:----------:|:----------:|:-----------:|
+| IPCA Mensal                 |   0.2220   |   0.3843   |  0.4556   |   0.2235   |   0.3849   |   -0.0177   |
+| 1. Alimentação e bebidas     |   0.1131   |   0.1499   |  0.1332   |   0.0947   |  -0.2157   |  -0.0936    |
+| 2. Habitação                 |   0.0289   |  -0.0015   |  0.1016   |   0.0380   |   0.1170   |  -0.0778    |
+| 3. Artigos de residência     |  -0.0015   |  -0.0097   | -0.0197   |   0.0070   |   0.0177   |   0.0273    |
+| 4. Vestuário                 |   0.0014   |   0.0258   |  0.0235   |   0.0009   |  -0.0009   |   0.0182    |
+| 5. Transportes               |  -0.0683   |   0.0288   |  0.0904   |  -0.0390   |   0.3722   |   0.0000    |
+| 6. Saúde e cuidados pessoais |   0.0573   |   0.1550   |  0.0929   |   0.0729   |   0.0298   |   0.0338    |
+| 7. Despesas pessoais         |   0.0333   |   0.0101   |  0.0222   |   0.0292   |   0.0524   |   0.0252    |
+| 8. Educação                  |   0.0085   |   0.0030   |  0.0055   |   0.0036   |   0.0048   |   0.0438    |
+| 9. Comunicação               |  -0.0063   |   0.0230   |  0.0067   |  -0.0038   |   0.0086   |   0.0048    |
+
+---
+class: center, top
+
+## Inflação por Faixas de Renda
+
+```{python conjun13, echo=FALSE, message=FALSE, out.width="90%"}
+
+dados_inf_renda = (
+    pd.read_csv(filepath_or_buffer="dados/dados_inf_renda.csv", sep=",", decimal=".")
+    )
+
+# Melt the data into long format
+melted_data = pd.melt(dados_inf_renda, id_vars='DATE', var_name='Income Group', value_name='Value')
+
+# Convert the DATE column to a datetime format for better plotting
+melted_data['DATE'] = pd.to_datetime(melted_data['DATE'])
+
+# Create the plot
+plot5 = (
+    ggplot(melted_data, aes(x='DATE', y='Value', color='Income Group')) +
+    geom_line(size=1.5) +
+    labs(title='', x='Anos', y='% a.m', color='Faixas de Renda') +
+    scale_x_datetime(date_breaks='1 year', date_labels='%Y') +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(size=12),
+        axis_text_y=element_text(size=12)
+    ) +
+    labs(title="",
+         caption = 'Dados: IPEA')
+)
+
+# Display the plot
+print(plot5)    
+```
+
+---
+class: left, top
+
+## O Mercado de Trabalho
+
+.pull-left[
+
+### A População Ocupada
+
+```{python conjun14, echo=FALSE, message=FALSE}
+import numpy as np
+import pandas as pd
+from plotnine import ggplot, aes, geom_line, labs, scale_x_datetime, theme_minimal, theme, element_text
+
+# Load the CSV files
+dataa = pd.read_csv('dados/arquivo12a.csv', sep=';')
+data = pd.read_csv('dados/arquivo12.csv', sep=';', skiprows=4)
+
+# Remove rows with NaN values
+data = data.dropna()
+data = data.iloc[:, 1:]
+
+# Assuming 'Valor' is the 6th column in 'dataa', based on your previous R code
+populacao = dataa.iloc[:, 5]  # Select the 6th column (Python is 0-indexed)
+
+# Add the 'populacao' column to the 'data' DataFrame
+data = pd.concat([data, populacao], axis=1)
+
+# Rename the 'populacao' column for clarity (optional but recommended)
+data = data.rename(columns={data.columns[-1]: 'populacao'})
+
+# Assuming 'populacao' is now the last column, reorder the columns
+columns = ['populacao'] + [col for col in data.columns if col != 'populacao']
+
+# Reorganize the DataFrame to move 'populacao' to the first position
+data = data[columns]
+
+# Calculate the required columns
+pnea = data.iloc[:, 1] - data.iloc[:, 2]  # PNEA: PIA - PEA
+pia_pop = (data.iloc[:, 1] / data.iloc[:, 0]) * 100  # PIA/Populacao
+participacao = (data.iloc[:, 2] / data.iloc[:, 1]) * 100  # PEA/PIA
+ocupacao_pia = (data.iloc[:, 3] / data.iloc[:, 1]) * 100  # PO/PIA
+desemprego = (data.iloc[:, 4] / data.iloc[:, 2]) * 100  # PD/PEA
+
+# Create the 'macro' DataFrame with the new calculated columns
+macro = pd.concat([data.iloc[:, :5], pnea, pia_pop, participacao, ocupacao_pia, desemprego], axis=1)
+
+# Rename the columns
+macro.columns = ['Populacao', 'PIA', 'PEA', 'PO', 'PD', 'PNEA', 'PIA/POP', 'PARTICIPACAO', 'PO/PIA', 'DESEMPREGO']
+
+# Now the 'macro' DataFrame contains the original and calculated columns
+
+# Create a date range starting from March 2012 with a monthly frequency
+macro['DATE'] = pd.date_range(start='2012-03-01', periods=len(macro), freq='M')
+
+# Graph 1: População Ocupada (PO)
+plot1 = (
+    ggplot(macro, aes(x='DATE', y='PO')) +
+    geom_line(color="darkblue", size=1.5) +
+    labs(title='', x='Anos', y='Pop. Ocupada') +
+    scale_x_datetime(date_breaks='1 year', date_labels='%Y') +  # Yearly breaks on x-axis
+    theme_minimal() +
+    theme(
+        figure_size=(16, 10),
+        legend_position="bottom",
+        axis_text_x=element_text(size=18),
+        axis_text_y=element_text(size=18)
+    ) +
+    labs(title="",
+         caption = 'Dados: PNADc IBGE')
+)
+
+print(plot1)
+```
+
+
+]
+
+.pull-right[
+
+### A Taxa de Desemprego
+
+```{python conjun15, echo=FALSE, message=FALSE}
+# Graph 2: Desemprego
+plot2 = (
+    ggplot(macro, aes(x='DATE', y='DESEMPREGO')) +
+    geom_line(color="red", size=1.5) +
+    labs(title='', x='Anos', y='Taxa de Desemprego (%)') +
+    scale_x_datetime(date_breaks='1 year', date_labels='%Y') +  # Yearly breaks on x-axis
+    theme_minimal() +
+    theme(
+        figure_size=(16, 10),
+        legend_position="bottom",
+        axis_text_x=element_text(size=18),
+        axis_text_y=element_text(size=18)
+    ) +
+    labs(title="",
+         caption = 'Dados: PNADc IBGE')
+)
+
+print(plot2)
+```
+
+]
+
+---
+class: left, top
+
+## O Mercado de Trabalho
+
+### População Ocupada Desagregada %
+
+.pull-left[
+
+```{python conjun16, echo=FALSE, message=FALSE}
+import pandas as pd
+from plotnine import ggplot, aes, geom_bar, labs, theme_minimal, theme, element_text
+
+
+datab = pd.read_csv('dados/arquivo12b.csv', sep=';', skiprows=4)
+
+# Remove rows with NaN values
+datab = datab.dropna()
+datab = datab.iloc[:, 1:]
+
+pesos_po1 = (datab.div(macro['PO'], axis=0)) * 100 # Divide all values of 'datab' by the 'PO' column of 'macro' and multiply by 100
+
+# Rename the columns of pesos_po1 DataFrame
+pesos_po1.columns = [
+    "Privado com Carteira",
+    "Privado sem Carteira",
+    "Trabalhador Domestico",
+    "Setor Publico",
+    "Empregador",
+    "Conta Propria",
+    "Trabalhador Familiar Auxiliar"
+]
+
+# Get the mean values for each category (similar to colMeans in R)
+mean_values = pesos_po1.mean()
+
+pesos_po1_last5 = pesos_po1.tail(5)
+mean_values_last5 = pesos_po1_last5.mean().reset_index()
+mean_values_last5.columns = ['Category', 'Mean']
+
+# Calculate the percentage for each category
+mean_values_last5['Percentage'] = mean_values_last5['Mean'] / mean_values_last5['Mean'].sum() * 100
+
+mean_values_last5.to_csv('dados/mean_values_last5.csv', index=False) 
+```
+
+```{r conjun17, echo=FALSE, message=FALSE, out.width="120%"}
+mean_values_last5 <- read.csv2('dados/mean_values_last5.csv',
+                       header=T, sep=',', dec=',')
+
+# Ensure Percentage column is numeric
+mean_values_last5$Percentage <- as.numeric(mean_values_last5$Percentage)
+
+# Adjust the margins and text size
+par(mar = c(2, 2, 2, 2), cex = 1.5)  # Adjust margins and increase text size
+
+# Create the pie chart
+pie(mean_values_last5$Percentage, 
+    col=c('red','black','blue','darkblue', 'darkgreen', 'yellow', 'pink'),  # Colors for each category
+    labels=mean_values_last5$Category, 
+    main='')
+```
+
+]
+
+.pull-right[
+
+| Categorias                      | Porcentagem |
+|:------------------------------|:----------:|
+| Privado com Carteira           |   37.82    |
+| Privado sem Carteira           |   13.49    |
+| Trabalhador Domestico          |    5.78    |
+| Setor Publico                  |   12.28    |
+| Empregador                     |    4.16    |
+| Conta Propria                  |   25.15    |
+| Trabalhador Familiar Auxiliar   |    1.32    |
+
+Fonte: PNADc/IBGE.
+
+]
+
+---
+class: center, top
+
+## Variação Interanual dos Rendimentos
+
+```{python conjun18, echo=FALSE, message=FALSE, out.width="82%"}
+import pandas as pd
+from plotnine import *
+
+anual = (
+    pd.read_csv(filepath_or_buffer="dados/anual_data.csv", parse_dates=['time'], sep=",", decimal=".")
+    )
+
+# Plot using plotnine
+anual_plot = (
+    ggplot(anual, aes(x='time', y='anual')) +
+    geom_line(color="darkblue", size=1.5) +
+    scale_x_datetime(date_breaks='1 year', date_labels='%Y') +
+    labs(x='Anos', y='Variação % Interanual') +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(size=16),
+        axis_text_y=element_text(size=16)
+    ) +
+    labs(title="",
+         caption = 'Dados: PNADc IBGE')
+)
+
+# Show the plot
+print(anual_plot)   
+```
+
+---
+class: center, top
+
+## Receita Liquida X Despesa Total do Governo Central
+
+```{python conjun19, echo=FALSE, message=FALSE, out.width="82%"}
+import pandas as pd
+from plotnine import *
+
+# Import the CSV file
+dados2 = pd.read_csv('dados/dados2.csv')
+
+# Convert the 'dates' column to datetime format
+dados2['dates'] = pd.to_datetime(dados2['dates'])
+
+# Assuming 'dados2' is already imported and contains 'dates', 'value', and 'variable' columns
+plot = (
+    ggplot(dados2) +
+    geom_line(aes(x='dates', y='value', color='variable'), size=1.5) +
+    scale_colour_manual(values=["red", "blue"]) +
+    scale_x_datetime(date_breaks='2 years', date_labels='%Y') +  # Correct placement of parentheses
+    labs(y="R$ Bilhões", x="Anos") +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(size=16),
+        axis_text_y=element_text(size=16)
+    ) +
+    labs(title="",
+         caption = 'Fonte: Tesouro Nacional')
+    )
+
+print(plot)
+```
+
+---
+class: center, top
+
+## Resultado Primário acumulado em 12 meses (% PIB)
+
+```{python conjun20, echo=FALSE, message=FALSE, out.width="82%"}
+import pandas as pd
+from plotnine import *
+
+# Import the CSV file
+ppibb = pd.read_csv('dados/ppibb.csv')
+
+# Convert the 'dates' column to datetime format
+ppibb['dates'] = pd.to_datetime(ppibb['dates'])
+
+# Assuming 'dados2' is already imported and contains 'dates', 'value', and 'variable' columns
+
+# Plot using plotnine
+plot = (
+    ggplot(ppibb, aes(x='dates', y='primario')) +
+    geom_line(color="darkblue", size=1.5) +
+    scale_x_datetime(date_breaks='2 years', date_labels='%Y') +  # Correct placement of parentheses
+    labs(y="% do PIB", x="Anos", title="") +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(size=16),
+        axis_text_y=element_text(size=16)
+    ) +
+    labs(title="",
+         caption = 'Fonte: Tesouro Nacional')
+    )
+
+print(plot)
+```
+
+---
+class: left, top
+
+### A Política Fiscal: Interanual e Interanual Acumulado
+
+.pull-left[
+.tiny[
+
+| Categorias                      | Julho/24   | Julho/23   | Var. (%) |
+|:---------------------------------|:----------:|:----------:|:------------:|
+| RECEITA TOTAL                    | 221485.69  | 202286.96  |     9.49     |
+| RECEITA RFB                      | 144394.44  | 125007.12  |    15.51     |
+| RECEITA NAO RFB                  |  26171.61  |  27783.55  |    -5.80     |
+| TRANSFERENCIAS                   |  37941.21  |  34710.42  |     9.31     |
+| RECEITA LIQUIDA                  | 183544.48  | 167576.55  |     9.53     |
+| DESPESA TOTAL                    | 192827.87  | 205113.09  |    -5.99     |
+| Beneficios Previd                |  73375.91  |  94579.10  |   -22.42     |
+| Pessoal                          |  36603.98  |  36787.47  |    -0.50     |
+| Outras Desp Obrig              |  30636.96  |  30987.05  |    -1.13     |
+| DESP DISCRIC.         |  21614.35  |  16284.59  |    32.73     |
+| PRIMARIO                         |  -9283.38  | -37536.55  |   -75.27     |
+
+]
+]
+
+.pull-right[
+
+.tiny[
+
+| Categorias                      | Julho/24   | Julho/23   | Var. (%) |
+|:---------------------------------|:----------:|:----------:|:------------:|
+| RECEITA TOTAL                    | 2583086.10 | 2451280.20 |     5.38     |
+| RECEITA RFB                      | 1611795.20 | 1507545.90 |     6.92     |
+| RECEITA NAO RFB                  |  337078.10 |  337913.10 |    -0.25     |
+| TRANSFERENCIAS                   |  496244.50 |  484037.50 |     2.52     |
+| RECEITA LIQUIDA                  | 2086841.60 | 1967242.70 |     6.08     |
+| DESPESA TOTAL                    | 2320132.30 | 2077952.70 |    11.65     |
+| Beneficio Previd                |  958599.00 |  905605.20 |     5.85     |
+| Pessoal                          |  383097.00 |  372382.30 |     2.88     |
+| Outras Desp Obrig              |  406448.10 |  340434.20 |    19.39     |
+| DESP DISCRIC.         |  216649.50 |  166766.80 |    29.91     |
+| PRIMARIO                         | -233290.70 | -110710.00 |   110.72     |
+
+]
+]
+
+
+---
+class: center, top
+
+## Receitas X Despesas do RGPS
+
+```{python conjun21, echo=FALSE, message=FALSE, out.width="86%"}
+import pandas as pd
+from plotnine import *
+from statsmodels.tsa.seasonal import seasonal_decompose
+from pandas.tseries.offsets import DateOffset
+#from statsmodels.tsa.seasonal import STL
+
+# Import the CSV file
+previdencia = pd.read_csv('dados/previdencia.csv', sep=",", decimal=".")
+
+# Step 2: Create the date column starting from 1997-01-01
+start_date = '1997-01-01'
+dates = pd.date_range(start=start_date, periods=len(previdencia['receita']), freq='ME')
+
+previdencia['date'] = dates
+
+# Step 3: Deseasonalize the 'receita' and 'despesa' columns
+def deseasonalize(series):
+    decomposition = seasonal_decompose(series, model='additive', period=12)
+    return series - decomposition.seasonal  # Subtracting the seasonal component to deseasonalize
+
+previdencia['receita_deseasonalized'] = deseasonalize(previdencia['receita'])
+previdencia['despesa_deseasonalized'] = deseasonalize(previdencia['despesa'])
+
+# Step 4: Filter the data for dates <= 2002-12-01
+previdencia = previdencia[previdencia['date'] > '2002-12-31']
+
+# Drop the original 'receita' and 'despesa' columns
+previdencia = previdencia.drop(columns=['receita', 'despesa'])
+
+# Display the resulting DataFrame
+#print(previdencia.head())
+# Melt the DataFrame to long format
+previdencia_melted = pd.melt(previdencia, id_vars=['date'], value_vars=['receita_deseasonalized', 'despesa_deseasonalized'], var_name='variable', value_name='value')
+
+# Create the line plot
+plot = (
+    ggplot(previdencia_melted, aes(x='date', y='value', color='variable')) +
+    geom_line(size=1) +
+    labs(title='', 
+         x='Data', y='R$ Bilhões', 
+         color='Série') +
+    scale_x_datetime(date_breaks='2 years', 
+    date_labels='%Y') +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(size=16),
+        axis_text_y=element_text(size=16)
+    ) +
+    labs(title="",
+         caption = 'Fonte: Tesouro Nacional')
+)
+
+# Show the plot
+print(plot)
+
+```
+
+---
+class: center, top
+
+## Despesas Selecionadas em relação as Despesas Totais
+
+```{python conjun22, echo=FALSE, message=FALSE, out.width="86%"}
+import pandas as pd
+from plotnine import ggplot, aes, geom_line, scale_x_datetime, labs, theme_minimal, element_text
+
+# Load the data
+real = pd.read_csv(filepath_or_buffer="dados/real.csv", sep=",", decimal=".")
+
+# Select the relevant columns
+selected_columns = ['DESPESA_TOTAL', 'Beneficios_Previd', 'Pessoal', 'Outras_Desp_Obrigat', 'DESPESAS_DISCRICIONARIAS']
+
+# Calculate the percentage of each selected variable with respect to DESPESA_TOTAL
+real_percent = real[selected_columns].copy()
+
+for column in selected_columns[1:]:
+    real_percent[column] = (real_percent[column] / real_percent['DESPESA_TOTAL']) * 100
+
+# Create a date range with monthly frequency from 1997-01 to 2024-07
+date_range = pd.date_range(start='1997-01-01', periods=len(real), freq='M')
+real_percent['date'] = date_range
+
+# Drop the 'DESPESA_TOTAL' column
+real_percent = real_percent.drop(columns=['DESPESA_TOTAL'])
+
+# Melt the DataFrame
+real_percent_melted = pd.melt(real_percent, id_vars=['date'], 
+                              var_name='variable', value_name='percent')
+
+# Filter the data to use only part of the time series (e.g., from 2000 to 2010)
+start_filter = '2009-01-01'
+real_percent_filtered = real_percent_melted[real_percent_melted['date'] >= start_filter]
+
+# Create the line plot using the filtered data
+plot = (
+    ggplot(real_percent_filtered, aes(x='date', y='percent', color='variable')) +
+    geom_line(size=1.5) +
+    scale_x_datetime(date_breaks='2 years', date_labels='%Y') +
+    scale_color_manual(values=['red', 'darkgreen', 'darkblue', 'gold']) +
+    labs(x='Anos', y='Percentual (%)', 
+         color='Categoria',
+         caption='Fonte: Tesouro Nacional') +
+    theme_minimal() +
+    theme(
+        figure_size=(14, 8),
+        legend_position="bottom",
+        axis_text_x=element_text(size=16),
+        axis_text_y=element_text(size=16)
+    )
+)
+
+# Display the plot
+print(plot)
+
+
+```
+
+
+
+---
+class: center, middle
+
+# OBRIGADO!
+
+João Ricardo F. de Lima <br>
+Email: joao.lima@prof.facape.br <br>
+IG: jotaerre.econ
+
+
+Telefones:<br>
+87-99961-5799 

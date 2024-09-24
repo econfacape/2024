@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ANÁLISE DA CONJUNTURA ECONÔMICA DO BRASIL</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="João Ricardo Lima D.Sc em Economia Aplicada joao.lima@prof.facape.br" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/xaringanExtra-progressBar/progress-bar.js"></script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# ANÁLISE DA CONJUNTURA ECONÔMICA DO BRASIL
+]
+.author[
+### João Ricardo Lima<br><span style = "font-size: 70%;">D.Sc em Economia Aplicada<br><a href="mailto:joao.lima@prof.facape.br" class="email">joao.lima@prof.facape.br</a>
+]
+.date[
+### <span style="font-size: 70%;"> 24 de Setembro de 2024.</span>
+]
+
+---
+
+class: left, top
+
+
+
+<style>.xe__progress-bar__container {
+  bottom:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #282f6b;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
+
+&lt;style type="text/css"&gt;
+pre {
+  white-space: pre-wrap;
+  overflow-y: scroll !important;
+  max-height: 45vh !important;
+  overflow-x: auto;
+  max-width: 100%;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+# Modelos macroeconômicos do BCB
+
+O **Banco Central do Brasil (BCB)** desde a implantação do **regime de metas para inflação** implementou modelos macroeconômicos para ajudar na condução da política monetária.
+
+Os principais modelos adotados são: 
+
+a) **Indicadores antecedentes e núcleos de inflação**: útil para análise de conjuntura de curto prazo;
+
+b) **Modelos de Vetores Autorregressivos (VAR)**: útil para prever inflação no curto prazo;
+
+c) **Modelos semiestruturais de pequeno porte**: ferramenta central para a análise das perspectivas para a inflação;
+
+d) **Modelo semiestrutural médio porte**: útil para análises de longo prazo, mas atualmente com importância reduzida;
+
+e) **Modelo estrutural de médio porte**: modelo DSGE (Equilíbrio Geral Dinâmico Estocástico) para a economia brasileira.
+
+---
+class: left, top
+
+# Modelo Semiestrutural de Pequeno Porte
+
+Dentre estes modelos, aqui será tratado o **modelo semiestrutural de pequeno porte**. Os principais pontos desses modelos são:
+
+a) A **inflação** depende da **taxa de juros real**;
+
+b) A **taxa de juros básica nominal** é o **instrumento de política**;
+
+c) Existem **mecanismos de transmissão nas decisões** de política econômica;
+
+d) As expectativas dos agentes podem ser do tipo **backward-looking** ou **forward-looking**;
+
+e) Existem **defasagens no mecanismo de transmissão**.
+
+---
+class: left, top
+
+# Modelo Semiestrutural de Pequeno Porte
+
+O modelo básico do **Banco Central**, que busca captar os mecanismos de transmissão das decisões de política monetária, bem como as defasagens aí envolvidas, pode ser visto em Bogdanski et al. (2000). Ele é composto por:
+
+a) Uma **Curva IS** (Investment-Saving), representando o **lado da demanda**;
+
+b) Uma **Curva de Phillips**, representando o **lado da oferta**;
+
+c) Uma **Condição de Paridade Descoberta da taxa de juros**, representando o contato com o **setor externo**;
+
+d) Uma **Regra de Taylor**, representando as **decisões de política monetária**.
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+#### A Curva IS 
+
+pode ser representada como abaixo:
+
+`$$h_t = \beta_0 + \beta_{1} h_{t-1} + \beta_{2j} r_{t} + \beta_{3} \Psi_{t-1} + u_t \tag{1}$$`
+onde `\(h_{t}\)` é o hiato do produto, `\(r_{t}\)` é o hiato da taxa de juros real ex ante e `\(\Psi_{t-1}\)` representa as necessidades de financiamento do setor público e `\(u_t\)` são os choques.
+
+#### A Curva de Phillips 
+
+é representada por:
+
+`$$\pi_t^{livres} = \beta_{0} + \beta_{1} E_t \pi^{total}_{t+i} + \beta_{2} \pi^{total}_{t-j} + \beta_{3} \pi^{importada}_{t-k} + \beta_{4} h_{t-1} + \beta_{5} \gamma_{t-1} + \varepsilon_t \tag{2}$$`
+onde `\(\pi_t^{livres}\)` é a inflação de preços livres, `\(E_t \pi^{total}_{t+i}\)` é a expectativa, `\(\pi^{total}_{t-j}\)` é a inflação com ajuste sazonal, `\(\pi^{importada}_{t-k}\)` é a importada, `\(h_{t-1}\)` é o hiato, `\(\gamma\)` é a taxa de câmbio nominal com uma defasagem e `\(\varepsilon_{t}\)` é um choque de oferta.
+
+---
+class: left, top
+
+# Modelo Semiestrutural de Pequeno Porte
+
+#### A Condição de Paridade Descoberta
+
+é dada por:
+
+`$$\gamma_{t} = \phi_{0}  - \phi_{1}(i_{t} - i_{t}^*) + \phi_{2}x_{t} + \varepsilon_{t}^{e}\tag{3}$$` 
+
+onde `\(\Delta\gamma_{t}\)` é a taxa de câmbio, `\((i_{t} - i_{t}^*)\)` representa o diferencial de juros domésticos e externos, `\(x_{t}\)` é o prêmio de risco medido pelo CDS5Y e `\(\varepsilon_{t}^{e}\)` é um choque externo.
+
+#### A Regra de Taylor 
+
+pode ser definida como:
+
+`$$i_t=\theta_1 i_{t-1}+\theta_2 i_{t-2}+\left(1-\theta_1-\theta_2\right) *\left[r_t^{e q}+\pi_t^{\text {meta }}+\theta_3\left(\pi_{t}-\pi_t^{\text {meta }}\right)\right]+ \theta_3 h_{t-1} + \epsilon_t^i \tag{4}$$` 
+
+Onde `\(i_t\)` representa a meta da taxa de juros nominal, `\(\pi_{t} - \pi_{t}^{M}\)` os desvios da inflação em relação a meta, `\(h_t\)` o hiato do produto (diferença entre o produto real e produto potencial), `\(r_t^{eq}\)` representa a taxa de juros real neutra variante no tempo, por fim, temos `\(\epsilon_t\)` representando os choques.
+
+---
+class: center, middle
+
+## O Hiato do Produto 
+
+.left-column[
+
+Representa a diferença entre o Produto Real de uma economia e o seu Produto Potencial. Quando o Produto Real está abaixo do Potencial, há um Hiato do produto Negativo (indicando recursos subutilizados). Quando está acima do Potencial, há um gap positivo (indicando superaquecimento da economia).
+
+]
+
+.right-column[
+
+
+&lt;img src="index_files/figure-html/conjun1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+A dummy da crise do Subprime mostra que no período houve contração econômica no Brasil. O mesmo para a dummy do período da pandemia.
+
+No caso do valor positivo para a variável do hiato defasado, o sinal é esperado mostrando que valores passados influenciam o valor atual do hiato, pois os ajustes na economia demandam tempo.
+
+O valor negativo da variável de politica monetária mostra que o aumento das taxas de juros no passado afetam o hiato da produção no presente, ou seja, o produto efetivo se aproxima do potencial, dado que os consumidores gastam menos e os empresários investem menos. 
+
+O impacto da política fiscal sobre o hiato não foi imediato, talvez devem levar mais tempo para afetar, dado não ser estatisticamente significativo. 
+]
+
+.pull-left[
+
+### A estimativa da Curva IS
+
+| Variáveis        | Coefic. | Erro-Pad | Est-T | Prob. |
+|:------------------|:----------:|:------------:|:--------:|:---------:|
+| Intercepto        | 0.1180   | 0.0849     | 1.3897 | 0.1646  |
+| Dummy Subpri       | -1.5329  | 0.1260     | -12.171| 0.0000  |
+| Dummy Covid          | -3.2344  | 0.1780     | -18.175| 0.0000  |
+| Autoreg IS       | 0.9444   | 0.0375     | 25.160 | 0.0000  |
+| Juros Real | -0.0750  | 0.0369     | -2.0329| 0.0421  |
+| NFSP   | -0.0457  | 0.0721     | -0.6339| 0.5262  |
+
+*Instrumentos*: hiato_lag1, juro_real_ex_ante_lag1, neutro_lag2, nfsp_diff_lag1
+]
+
+---
+class: center, middle
+
+## O IPCA Preços Livres 
+
+.left-column[
+
+São todos os preços não administrados. Os preços administrados são, por ex.: Taxa de água e esgoto, gás de botijão, gás encanado, energia elétrica residencial, ônibus urbano, táxi, trem, ônibus intermunicipal, ônibus interestadual, metrô, integração de transporte público, emplacamento e licença, multa, pedágio, gasolina, óleo diesel, entre outros.
+
+]
+
+.right-column[
+
+
+&lt;img src="index_files/figure-html/conjun3-3.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+As Expectativas de Inflação, a Inflação Passada e a Inflação Internacional explicam significativamente o IPCA preços livres.
+
+A Inflação Passada do IPCA preços livres tem um coeficiente negativo, mas não é o esperado.
+
+O Hiato do Produto se comporta de acordo com a teoria, tendo um leve impacto positivo na inflação.
+
+O modelo não captou mudanças significativas na Taxa de Câmbio sobre a Inflação no curto prazo. 
+
+O efeito do período da COVID é significativo, como esperado.
+
+]
+
+.pull-right[
+
+### A estimativa da Curva de Phillips
+
+| Variáveis        | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:-----------------|:-----------:|:----------:|:--------:|:---------:|
+| Inércia IPCA Liv | -0.7569     | 0.1230     | -6.1539  | 0.0000 |
+| Expec IPCA     |  0.3050     | 0.0518     |  5.8898  | 0.0000 |
+| Inércia IPCA  |  0.6498     | 0.0531     | 12.2305  | 0.0000|
+| Inércia IC          |  0.0452     | 0.0187     |  2.4173  | 0.0182|
+| Hiato Prod.            |  0.0012     | 0.0006     |  2.0286  | 0.0463|
+| Var. Câmbio      | -0.4036     | 0.4767     | -0.8466  | 0.4000    |
+| Dummy Covid          |  0.7863     | 0.4349     |  1.8079  | 0.0749|
+
+ *Instrumentos*: ipca_exp_12m_lead2 + ipca_total_lag1 + ic_lag1 + cambio_diff + hiato_lag1
+    
+]
+
+---
+class: center, middle
+
+## A Taxa de Câmbio 
+
+.left-column[
+
+A Paridade de Juros Descoberta ajuda a explicar a relação entre as taxas de juros e as taxas de câmbio entre dois países. Se um país tem uma taxa de juro mais elevada do que outro, espera-se que a sua moeda se desvalorize no futuro para compensar os retornos mais elevados da sua taxa de juro.
+
+]
+
+.right-column[
+
+
+&lt;img src="index_files/figure-html/conjun4-5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+Um aumento no Prêmio de Risco defasado leva a um aumento (depreciação) na taxa de câmbio neste modelo. 
+
+No caso da Taxa de Juros, o diferencial defasado da taxa de juros não tem um impacto claro ou forte na taxa de câmbio neste modelo.
+
+]
+
+.pull-right[
+
+### A Paridade Descoberta Juros
+
+
+
+| Variáveis        | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:-----------------|:-----------:|:----------:|:--------:|:---------:|
+| Intercepto        |  0.1014     | 0.0450     |  2.257   |  0.024    |
+| Tendência            |  0.0227     | 0.0030     |  8.773   |  0.000    |
+| Risco lag        |  0.0015     | 0.0003     |  4.464   |  0.000    |
+| Juros Lag     | -0.0249     | 0.0210     | -1.194   |  0.233    |
+| ar.L1            |  0.9302     | 0.0260     | 35.565   |  0.000    |
+| `\(\sigma^2\)`           |  0.0172     | 0.0010     | 12.544   |  0.000    |
+
+]
+
+---
+class: center, middle
+
+## A Taxa de Juros 
+
+.left-column[
+
+Os bancos centrais devem ajustar as Taxas de Juros em resposta às mudanças na inflação e na produção econômica.
+
+Se a inflação real estiver acima da meta, o BC aumenta as taxas de juros para reduzir a pressão inflacionista. 
+
+Se a economia estiver aquecida, as taxas de juros são aumentadas para evitar aumento da inflação.
+
+]
+
+.right-column[
+
+
+&lt;img src="index_files/figure-html/conjun6-7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: left, top
+
+## Modelo Semiestrutural de Pequeno Porte
+
+.pull-left[
+
+### Regra da Taxa de Juros de Taylor
+
+O coeficiente positivo em Selic Lag1 indica que o Banco Central é cauteloso em fazer grandes e abruptas mudanças na taxa de juros.
+
+A resposta do Banco Central aos desvios na inflação é positiva, ou seja o coeficiente mostra que eles ajustam a taxa Selic para cima em resposta à inflação.
+
+O Hiato do Produto não foi significativo, neste modelo. O Banco Central pode não estar usando o produto como um grande impulsionador de decisões políticas.
+]
+
+.pull-right[
+
+#### Modelo Básico
+
+| Variáveis       | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:----------------|:-----------:|:----------:|:--------:|:---------:|
+| Intercepto      |  8.7796     | 0.5300     | 16.568   |  0.000    |
+| Desvio Inflação     |  0.6331     | 0.1720     |  3.688   |  0.001    |
+| Hiato           |  0.4765     | 0.2170     |  2.198   |  0.032    |
+
+#### Modelo Básico BCB
+
+| Variáveis        | Coefic.     | Erro-Pad   | Est-T    | Prob.     |
+|:-----------------|:-----------:|:----------:|:--------:|:---------:|
+| Selic Lag1       |  1.5411     | 0.1210     | 12.755   |  0.000    |
+| Selic Lag2       | -0.5746     | 0.1150     | -4.987   |  0.000    |
+| Desvio Inflação  |  0.1474     | 0.0490     |  3.033   |  0.004    |
+| Inércia Hiato    |  0.0081     | 0.0400     |  0.204   |  0.839    |
+
+]
+
+---
+class: left, top
+
+## Comportamento do PIB Trimestral (IBGE)
+
+&lt;img src="index_files/figure-html/conjun7-9.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## PIB Taxas de Variação
+
+
+
+
+&lt;img src="index_files/figure-html/conjun9-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, middle
+
+## PIB do lado da Oferta Acumulado 4 Trimestres
+
+&lt;img src="index_files/figure-html/conjun10-3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, middle
+
+### PIB do lado da Demanda Acumulado 4 Trimestres
+
+
+&lt;img src="index_files/figure-html/conjun11-5.png" width="82%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, center
+## PIB Taxas de Variação
+
+.left-column[
+
+Agricultura, em 2024, vem passando por desafios devido as questões climáticas.
+
+O PIB está com crescimento acumulado de 2,39%.
+
+O crescimento é puxado por consumo das famílias e exportações, mas no último trimestre a FBCF teve crescimento importante.
+]
+
+.right-column[
+
+| Rubrica                  | Var. % margem | Var. % interanual | Var. % anual | Var. % acumulada no ano |
+|:-------------------------|:-------------:|:-----------------:|:------------:|:-----------------------:|
+| PIB                      |     1.45      |       3.33        |    2.45      |          2.90           |
+| Agropecuária              |    -2.32      |      -2.86        |    0.01      |         -2.93           |
+| Indústria                 |     1.83      |       3.90        |    2.63      |          3.38           |
+| Serviços                  |     1.01      |       3.53        |    2.55      |          3.28           |
+| Cons. Famílias      |     1.35      |       4.88        |    3.69      |          4.64           |
+| Cons. Governo        |     1.30      |       3.15        |    2.37      |          2.87           |
+| FBCF                      |     2.08      |       5.66        |   -0.91      |          4.18           |
+| Exportação                |     1.37      |       4.51        |    7.03      |          5.44           |
+| Importação                |     7.64      |      14.84        |    4.08      |         12.57           |
+]
+
+
+---
+class: center, top
+
+## Inflação no Mundo
+
+&lt;img src="index_files/figure-html/conjun12-7.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, top
+
+## IPCA Acumulado em 12 Meses
+
+
+&lt;img src="index_files/figure-html/conjun13a-1.png" width="72%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: left, center
+
+## O IPCA contribuição por grupo
+
+| Groups                      | Março 2024 | Abril 2024 | Maio 2024 | Junho 2024 | Julho 2024 | Agosto 2024 |
+|:----------------------------|:----------:|:----------:|:---------:|:----------:|:----------:|:-----------:|
+| IPCA Mensal                 |   0.2220   |   0.3843   |  0.4556   |   0.2235   |   0.3849   |   -0.0177   |
+| 1. Alimentação e bebidas     |   0.1131   |   0.1499   |  0.1332   |   0.0947   |  -0.2157   |  -0.0936    |
+| 2. Habitação                 |   0.0289   |  -0.0015   |  0.1016   |   0.0380   |   0.1170   |  -0.0778    |
+| 3. Artigos de residência     |  -0.0015   |  -0.0097   | -0.0197   |   0.0070   |   0.0177   |   0.0273    |
+| 4. Vestuário                 |   0.0014   |   0.0258   |  0.0235   |   0.0009   |  -0.0009   |   0.0182    |
+| 5. Transportes               |  -0.0683   |   0.0288   |  0.0904   |  -0.0390   |   0.3722   |   0.0000    |
+| 6. Saúde e cuidados pessoais |   0.0573   |   0.1550   |  0.0929   |   0.0729   |   0.0298   |   0.0338    |
+| 7. Despesas pessoais         |   0.0333   |   0.0101   |  0.0222   |   0.0292   |   0.0524   |   0.0252    |
+| 8. Educação                  |   0.0085   |   0.0030   |  0.0055   |   0.0036   |   0.0048   |   0.0438    |
+| 9. Comunicação               |  -0.0063   |   0.0230   |  0.0067   |  -0.0038   |   0.0086   |   0.0048    |
+
+---
+class: center, top
+
+## Inflação por Faixas de Renda
+
+
+&lt;img src="index_files/figure-html/conjun13-3.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## O Mercado de Trabalho
+
+.pull-left[
+
+### A População Ocupada
+
+
+&lt;img src="index_files/figure-html/conjun14-5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+.pull-right[
+
+### A Taxa de Desemprego
+
+
+&lt;img src="index_files/figure-html/conjun15-7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+class: left, top
+
+## O Mercado de Trabalho
+
+### População Ocupada Desagregada %
+
+.pull-left[
+
+
+
+&lt;img src="index_files/figure-html/conjun17-9.png" width="120%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+| Categorias                      | Porcentagem |
+|:------------------------------|:----------:|
+| Privado com Carteira           |   37.82    |
+| Privado sem Carteira           |   13.49    |
+| Trabalhador Domestico          |    5.78    |
+| Setor Publico                  |   12.28    |
+| Empregador                     |    4.16    |
+| Conta Propria                  |   25.15    |
+| Trabalhador Familiar Auxiliar   |    1.32    |
+
+Fonte: PNADc/IBGE.
+
+]
+
+---
+class: center, top
+
+## Variação Interanual dos Rendimentos
+
+
+&lt;img src="index_files/figure-html/conjun18-1.png" width="82%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, top
+
+## Receita Liquida X Despesa Total do Governo Central
+
+
+&lt;img src="index_files/figure-html/conjun19-3.png" width="82%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, top
+
+## Resultado Primário acumulado em 12 meses (% PIB)
+
+
+&lt;img src="index_files/figure-html/conjun20-5.png" width="82%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+### A Política Fiscal: Interanual e Interanual Acumulado
+
+.pull-left[
+.tiny[
+
+| Categorias                      | Julho/24   | Julho/23   | Var. (%) |
+|:---------------------------------|:----------:|:----------:|:------------:|
+| RECEITA TOTAL                    | 221485.69  | 202286.96  |     9.49     |
+| RECEITA RFB                      | 144394.44  | 125007.12  |    15.51     |
+| RECEITA NAO RFB                  |  26171.61  |  27783.55  |    -5.80     |
+| TRANSFERENCIAS                   |  37941.21  |  34710.42  |     9.31     |
+| RECEITA LIQUIDA                  | 183544.48  | 167576.55  |     9.53     |
+| DESPESA TOTAL                    | 192827.87  | 205113.09  |    -5.99     |
+| Beneficios Previd                |  73375.91  |  94579.10  |   -22.42     |
+| Pessoal                          |  36603.98  |  36787.47  |    -0.50     |
+| Outras Desp Obrig              |  30636.96  |  30987.05  |    -1.13     |
+| DESP DISCRIC.         |  21614.35  |  16284.59  |    32.73     |
+| PRIMARIO                         |  -9283.38  | -37536.55  |   -75.27     |
+
+]
+]
+
+.pull-right[
+
+.tiny[
+
+| Categorias                      | Julho/24   | Julho/23   | Var. (%) |
+|:---------------------------------|:----------:|:----------:|:------------:|
+| RECEITA TOTAL                    | 2583086.10 | 2451280.20 |     5.38     |
+| RECEITA RFB                      | 1611795.20 | 1507545.90 |     6.92     |
+| RECEITA NAO RFB                  |  337078.10 |  337913.10 |    -0.25     |
+| TRANSFERENCIAS                   |  496244.50 |  484037.50 |     2.52     |
+| RECEITA LIQUIDA                  | 2086841.60 | 1967242.70 |     6.08     |
+| DESPESA TOTAL                    | 2320132.30 | 2077952.70 |    11.65     |
+| Beneficio Previd                |  958599.00 |  905605.20 |     5.85     |
+| Pessoal                          |  383097.00 |  372382.30 |     2.88     |
+| Outras Desp Obrig              |  406448.10 |  340434.20 |    19.39     |
+| DESP DISCRIC.         |  216649.50 |  166766.80 |    29.91     |
+| PRIMARIO                         | -233290.70 | -110710.00 |   110.72     |
+
+]
+]
+
+
+---
+class: center, top
+
+## Receitas X Despesas do RGPS
+
+
+&lt;img src="index_files/figure-html/conjun21-7.png" width="86%" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, top
+
+## Despesas Selecionadas em relação as Despesas Totais
+
+
+&lt;img src="index_files/figure-html/conjun22-9.png" width="86%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+class: center, middle
+
+# OBRIGADO!
+
+João Ricardo F. de Lima &lt;br&gt;
+Email: joao.lima@prof.facape.br &lt;br&gt;
+IG: jotaerre.econ
+
+
+Telefones:&lt;br&gt;
+87-99961-5799 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
